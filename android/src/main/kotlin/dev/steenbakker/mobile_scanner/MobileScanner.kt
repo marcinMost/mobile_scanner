@@ -271,8 +271,11 @@ class MobileScanner(
             preview = previewBuilder.build().apply { setSurfaceProvider(surfaceProvider) }
 
             // Build the analyzer to be passed on to MLKit
+            val camProfile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH)
+
             val analysisBuilder = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            analysisBuilder.setDefaultResolution(Size(camProfile.videoFrameWidth, camProfile.videoFrameHeight))
             val displayManager = activity.applicationContext.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
 
             if (cameraResolution != null) {
